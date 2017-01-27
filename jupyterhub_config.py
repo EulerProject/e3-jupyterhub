@@ -36,6 +36,7 @@ c.DockerSpawner.notebook_dir = notebook_dir
 # Mount the real user's Docker volume on the host to the notebook user's
 # notebook directory in the container
 c.DockerSpawner.volumes = { 'jupyterhub-user-{username}': notebook_dir }
+
 c.DockerSpawner.extra_create_kwargs.update({ 'volume_driver': 'local' })
 # Remove containers once they are stopped
 c.DockerSpawner.remove_containers = True
@@ -52,10 +53,12 @@ c.JupyterHub.ssl_key = os.environ['SSL_KEY']
 c.JupyterHub.ssl_cert = os.environ['SSL_CERT']
 
 # Authenticate users with GitHub OAuth
-c.JupyterHub.authenticator_class = 'oauthenticator.GoogleOAuthenticator'
-c.GoogleOAuthenticator.client_id = os.environ['GOOGLE_CLIENT_ID']
-c.GoogleOAuthenticator.client_secret = os.environ['GOOGLE_CLIENT_SECRET']
-c.GoogleOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
+c.JupyterHub.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
+c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
+#c.JupyterHub.authenticator_class = 'oauthenticator.GoogleOAuthenticator'
+#c.GoogleOAuthenticator.client_id = os.environ['GOOGLE_CLIENT_ID']
+#c.GoogleOAuthenticator.client_secret = os.environ['GOOGLE_CLIENT_SECRET']
+#c.GoogleOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
 
 # Persist hub data on volume mounted inside container
 data_dir = os.environ.get('DATA_VOLUME_CONTAINER', '/data')
