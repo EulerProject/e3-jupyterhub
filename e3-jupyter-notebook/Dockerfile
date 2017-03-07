@@ -23,7 +23,9 @@ RUN pip2 install \
     autologging \
     matplotlib \
     networkx \
-    gitpython
+    gitpython \
+    beautifulsoup4 \ 
+    bash-kernel
 
 RUN git config --global user.email "e3"
 RUN git config --global user.name "e3"
@@ -37,12 +39,14 @@ RUN git clone https://github.com/EulerProject/EulerX /opt/eulerx
 RUN chown -R jovyan:root /opt/eulerx/default_stylesheet
 RUN git clone https://github.com/EulerProject/e3 /opt/e3
 RUN git clone https://github.com/EulerProject/e3-kernel /opt/e3-kernel
-RUN git clone https://github.com/EulerProject/euler2-demos /opt/euler2-demos
 
 # Install e3 jupyter kernel
 ENV E3KERNEL_CONTENT='{"argv": ["/opt/conda/bin/python", "/opt/e3-kernel/e3_kernel.py", "{connection_file}", "/home/jovyan/work"], "display_name": "e3", "language": "e3"}'
 RUN mkdir -p /opt/conda/share/jupyter/kernels/e3-kernel/
 RUN echo $E3KERNEL_CONTENT > /opt/conda/share/jupyter/kernels/e3-kernel/kernel.json
+
+# Install bash kernel
+RUN python -m bash_kernel.install
 
 # Install euler prerequisits 
 RUN wget http://www.dlvsystem.com/files/dlv.x86-64-linux-elf-static.bin -P /opt/reasoners/dlv
