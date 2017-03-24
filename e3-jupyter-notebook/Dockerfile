@@ -24,8 +24,12 @@ RUN pip2 install \
     matplotlib \
     networkx \
     gitpython \
-    beautifulsoup4 \ 
-    bash-kernel
+    beautifulsoup4 \
+    html5lib \
+    ruamel.yaml
+
+RUN pip install \ 
+     bash-kernel
 
 RUN git config --global user.email "e3"
 RUN git config --global user.name "e3"
