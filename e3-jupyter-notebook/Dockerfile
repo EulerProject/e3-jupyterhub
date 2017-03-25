@@ -36,8 +36,8 @@ RUN git config --global user.name "e3"
 
 # Clone euler repos
 RUN git clone https://github.com/EulerProject/EulerX /opt/eulerx
-RUN sed -i '1s|.*|#!/usr/bin/env python2|' /opt/eulerx/src-el/euler2
-RUN sed -i '1s|.*|#!/usr/bin/env python2|' /opt/eulerx/src-el/y2d
+#RUN sed -i '1s|.*|#!/usr/bin/env python2|' /opt/eulerx/src-el/euler2
+#RUN sed -i '1s|.*|#!/usr/bin/env python2|' /opt/eulerx/src-el/y2d
 RUN grep -rl '#!/usr/bin/env python' /opt/eulerx/src-el/ | xargs sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python2|g'
 RUN grep -rl '#! /usr/bin/env python' /opt/eulerx/src-el/ | xargs sed -i 's|#! /usr/bin/env python|#!/usr/bin/env python2|g'
 RUN chown -R jovyan:root /opt/eulerx/default_stylesheet
